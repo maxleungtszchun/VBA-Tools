@@ -95,6 +95,12 @@ Public Function twoD2oneD(twoD_array As Variant, dimension) As Variant
     twoD2oneD = new_array 'return array dimension starts from 0
 End Function
 
+Public Sub PasteFromMatrix(matrix As Variant, targetCell As Range)
+    Dim matrixRange As Range
+    Set matrixRange = targetCell.Resize(UBound(matrix, 1), UBound(matrix, 2))
+    matrixRange.Value2 = matrix
+End Sub
+
 Public Function getColIndex(ws As Worksheet, colName As String, Optional headerRow As Long = 1) As Long
     Dim lc As Long
     Dim arr As Variant
