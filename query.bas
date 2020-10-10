@@ -49,9 +49,3 @@ End Function
 Private Function getName(table As ListObject) As String
     getName = "[" & table.Parent.Name & "$" & table.Range.Address(False, False) & "] AS [" & table.Name & "]"
 End Function
-
-Sub PasteFromMatrix(matrix As Variant, targetCell As Range)
-    Dim matrixRange As Range
-    Set matrixRange = targetCell.Resize(UBound(matrix, 1), UBound(matrix, 2))
-    matrixRange.Value2 = matrix
-End Sub
