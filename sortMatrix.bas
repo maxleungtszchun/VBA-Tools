@@ -1,4 +1,4 @@
-Attribute VB_Name = "Module1"
+Attribute VB_Name = "sortMatrix"
 Option Explicit
 
 Public Function sortMatrix(matrix As Variant, col_index_1 As Long, order_1 As Integer, col_index_2 As Long, order_2 As Integer) As Variant

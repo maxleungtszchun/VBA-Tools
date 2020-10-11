@@ -1,7 +1,27 @@
 Attribute VB_Name = "utils"
 Option Explicit
 
-Public Function getUniqueValue(arr As Variant) As Variant
+Public Function getUniqueValue_(arr As Variant) As Variant 'accept array index starts from 0'
+    Dim new_arr As Variant
+    Dim i As Long
+    
+    arr = Application.WorksheetFunction.Unique(arr, True, False)
+    
+    ReDim new_arr(0 To UBound(arr) - 1)
+    For i = LBound(arr) To UBound(arr)
+        new_arr(i - 1) = arr(i)
+    Next i
+    
+    getUniqueValue_ = new_arr 'return array index starts from 0
+End Function
+
+Public Function getUniqueValueNoBlank_(arr As Variant) As Variant 'accept array index starts from 0'
+    arr = getUniqueValue_(arr)
+    arr = noBlankOrEmptyStrInArr(arr)
+    getUniqueValueNoBlank = arr 'return array index starts from 0
+End Function
+
+Public Function getUniqueValue(arr As Variant) As Variant 'accept array index starts from 0'
     Dim i As Long
     Dim dict As Object
     Dim new_arr As Variant
@@ -25,22 +45,22 @@ Public Function getUniqueValue(arr As Variant) As Variant
         i = i + 1
     Next key
     
-    getUniqueValue = new_arr
+    getUniqueValue = new_arr 'return array index starts from 0
 End Function
 
-Public Function getUniqueValueNoBlank(arr As Variant) As Variant
+Public Function getUniqueValueNoBlank(arr As Variant) As Variant 'accept array index starts from 0'
     arr = getUniqueValue(arr)
     arr = noBlankOrEmptyStrInArr(arr)
-    getUniqueValueNoBlank = arr
+    getUniqueValueNoBlank = arr 'return array index starts from 0
 End Function
 
-Public Function noBlankOrEmptyStrInArr(arr As Variant)
+Public Function noBlankOrEmptyStrInArr(arr As Variant) 'accept array index starts from 0'
     Dim i As Long, j As Long
     Dim new_arr As Variant
     
     j = 0
     For i = LBound(arr) To UBound(arr)
-        If arr(i) = "" Then
+        If arr(i) = "" Then 'both blank and empty string can be detected"
             j = j + 1
         End If
     Next i
@@ -55,10 +75,10 @@ Public Function noBlankOrEmptyStrInArr(arr As Variant)
         End If
     Next i
     
-    noBlankOrEmptyStrInArr = new_arr
+    noBlankOrEmptyStrInArr = new_arr 'return array index starts from 0
 End Function
 
-Public Function twoD2oneD(twoD_array As Variant, dimension) As Variant
+Public Function twoD2oneD(twoD_array As Variant, dimension) As Variant 'accept 2 dimensional row or column array index starts from 1'
     Dim d As Integer
     Dim new_array As Variant
     Dim i As Long
@@ -92,10 +112,10 @@ Public Function twoD2oneD(twoD_array As Variant, dimension) As Variant
         End If
     Next i
     
-    twoD2oneD = new_array 'return array dimension starts from 0
+    twoD2oneD = new_array 'return array index starts from 0
 End Function
 
-Public Sub PasteFromMatrix(matrix As Variant, targetCell As Range)
+Public Sub PasteFromMatrix(matrix As Variant, targetCell As Range) 'accept matrix index starts from 1'
     Dim matrixRange As Range
     Set matrixRange = targetCell.Resize(UBound(matrix, 1), UBound(matrix, 2))
     matrixRange.Value2 = matrix
@@ -107,7 +127,7 @@ Public Function getColIndex(ws As Worksheet, colName As String, Optional headerR
     Dim i As Long
     
     lc = ws.Cells(headerRow, ws.Columns.Count).End(xlToLeft).Column
-    arr = ws.Range(ws.Cells(headerRow, 1), ws.Cells(headerRow, lc))
+    arr = ws.Range(ws.Cells(headerRow, 1), ws.Cells(headerRow, lc)) 'index must start from 1'
     
     For i = LBound(arr, 2) To UBound(arr, 2)
         If arr(1, i) = colName Then
