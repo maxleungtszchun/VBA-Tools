@@ -45,7 +45,7 @@ Function Query(tbl As ListObject, sql1 As String, Optional sql2 As String = "") 
     Set rs = Nothing
     Set conn = Nothing
     
-    Query = matrix 'return matrix dimension starts from 1
+    Query = matrix 'return matrix index starts from 1
 End Function
 
 Private Function getName(table As ListObject) As String
