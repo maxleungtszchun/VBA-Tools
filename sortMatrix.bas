@@ -1,7 +1,7 @@
 Attribute VB_Name = "sortMatrix"
 Option Explicit
 
-Public Function sortMatrix(matrix As Variant, col_index_1 As Long, order_1 As Integer, col_index_2 As Long, order_2 As Integer) As Variant
+Public Function sortMatrix(matrix As Variant, col_index_1 As Long, order_1 As Integer, col_index_2 As Long, order_2 As Integer) As Variant 'accept matrix index starts from 1'
     Dim column_1 As Variant
     Dim column_2 As Variant
     
@@ -16,7 +16,7 @@ Public Function sortMatrix(matrix As Variant, col_index_1 As Long, order_1 As In
     column_1 = columnInMatrix(matrix, col_index_1)
     column_2 = columnInMatrix(matrix, col_index_2)
     
-    sortMatrix = Application.WorksheetFunction.SortBy(matrix, column_1, order_1, column_2, order_2)
+    sortMatrix = Application.WorksheetFunction.SortBy(matrix, column_1, order_1, column_2, order_2) 'return matrix index starts from 1'
 End Function
 
 Private Function columnInMatrix(matrix As Variant, col_index As Long) As Variant
