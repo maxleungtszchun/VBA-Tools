@@ -54,7 +54,7 @@ Public Function getUniqueValueNoBlank(arr As Variant) As Variant 'accept array i
     getUniqueValueNoBlank = arr 'return array index starts from 0
 End Function
 
-Public Function noBlankOrEmptyStrInArr(arr As Variant) 'accept row array (1d or 2d) index starts from 0 or 1'
+Public Function noBlankOrEmptyStrInArr(arr As Variant) 'accept 1d array index starts from 0 or 1'
     Dim i As Long, j As Long
     Dim new_arr As Variant
     
