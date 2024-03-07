@@ -2,7 +2,7 @@ Attribute VB_Name = "userDefinedFunction"
 Option Explicit
 
 ' =COUNTA(UNIQUE(IF(ISBLANK(yourRange),"",yourRange)))-IF(COUNTBLANK(yourRange)>0,1,0)
-' the above Excel function can do the same thing
+' the above Excel function can do the same thing for the column case
 ' COUNTBLANK() counts empty string as blank, which is different from ISBLANK()
 Function distinctCountNoBlank(rng As Range, dimension As String) As Long
     Application.Volatile
