@@ -1,7 +1,7 @@
 Attribute VB_Name = "utils"
 Option Explicit
 
-Public Function getUniqueValue_(arr As Variant) As Variant 'accept 1d array index starts from 0
+Public Function getUniqueValue2(arr As Variant) As Variant 'accept 1d array index starts from 0
     Dim new_arr As Variant
     Dim i As Long
 
@@ -12,13 +12,13 @@ Public Function getUniqueValue_(arr As Variant) As Variant 'accept 1d array inde
         new_arr(i - 1) = arr(i)
     Next i
 
-    getUniqueValue_ = new_arr 'return 1d array index starts from 0
+    getUniqueValue2 = new_arr 'return 1d array index starts from 0
 End Function
 
-Public Function getUniqueValueNoBlank_(arr As Variant) As Variant 'accept 1d array index starts from 0
-    arr = getUniqueValue_(arr)
+Public Function getUniqueValueNoBlank2(arr As Variant) As Variant 'accept 1d array index starts from 0
+    arr = getUniqueValue2(arr)
     arr = noBlankOrEmptyStrInArr(arr)
-    getUniqueValueNoBlank = arr 'return 1d array index starts from 0
+    getUniqueValueNoBlank2 = arr 'return 1d array index starts from 0
 End Function
 
 Public Function getUniqueValue(arr As Variant) As Variant 'accept 1d array index starts from 0
