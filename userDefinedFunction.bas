@@ -1,9 +1,10 @@
 Attribute VB_Name = "userDefinedFunction"
 Option Explicit
 
-' =COUNTA(UNIQUE(IF(ISBLANK(yourRange),"",yourRange)))-IF(COUNTBLANK(yourRange)>0,1,0)
-' the above Excel function can do the same thing for the column case
-' COUNTBLANK() counts empty string as blank, which is different from ISBLANK()
+' https://gist.github.com/maxleungtszchun/05139424c0e9510290cef6f7a04c710f
+' distinctcountnoblank() Excel function in the above gist can do the same thing
+' it should be faster because it only uses built-in Excel function
+' Note COUNTBLANK() counts empty string as blank, which is different from ISBLANK()
 Function distinctCountNoBlank(rng As Range, dimension As String) As Long
     Application.Volatile
     Dim arr As Variant
