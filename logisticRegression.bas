@@ -34,12 +34,12 @@ Sub logistic_regression()
     data_ws_lc = data_ws.Cells(1, cover_ws.Columns.Count).End(xlToLeft).Column
 
     y_range_string = "A2:A" & data_ws_lr
-    X_range_string = "B2:" + Chr(65 + data_ws_lc - 1) & data_ws_lr
+    X_range_string = "B2:" & Chr(64 + data_ws_lc) & data_ws_lr
 
     beta_range_string = "B1:B" & (data_ws_lc - 1)
 
-    log_likelihood_string = "=SUM(data!" + y_range_string + "*LN(1/(1+EXP(-MMULT(data!" + X_range_string + "," + beta_range_string + _
-        "))))+(1-data!" + y_range_string + ")*LN(1 - 1/(1+EXP(-MMULT(data!" + X_range_string + "," + beta_range_string + ")))))"
+    log_likelihood_string = "=SUM(data!" & y_range_string & "*LN(1/(1+EXP(-MMULT(data!" & X_range_string & "," & beta_range_string & _
+        "))))+(1-data!" & y_range_string & ")*LN(1 - 1/(1+EXP(-MMULT(data!" & X_range_string & "," & beta_range_string & ")))))"
 
     cover_ws.Range(beta_range_string).Value2 = 0
     cover_ws.Range("D1").Formula2 = log_likelihood_string
