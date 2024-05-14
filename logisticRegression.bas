@@ -4,7 +4,7 @@ Option Explicit
 ' The following MS website contains the code for calling Solv (and its arguments) from Solver32.dll
 ' https://answers.microsoft.com/en-us/msoffice/forum/all/calling-solver-dll-through-vba/e453b8d1-14cc-471f-b740-2c0064bb17bb
 ' same info
-' https://github.com/GCuser99/SolverWrapper/blob/main/src/vba/SolvDLL.cls'
+' https://github.com/GCuser99/SolverWrapper/blob/main/src/vba/SolvDLL.cls
 
 #If VBA7 Then
 Private Declare PtrSafe Function Solv Lib "Solver32.dll" (ByVal obj, ByVal obj, ByVal work_book, ByVal x As Long) As Long
@@ -23,9 +23,12 @@ Sub logistic_regression()
     Dim beta_range_string As String
     Dim log_likelihood_string As String
 
-    ' Create a workbook with "data" worksheet and "cover" worksheet
-    ' the first row of "data" worksheet is header e.g., Cell A1 = "y", Cell B1 = "intercept", Cell C1 = "x1", and so on (at least one x)
-    ' Column A must store data of y, column B must be a vector of 1, column C must store data of x1...
+    ' create a workbook with "data" worksheet and "cover" worksheet
+    ' the first column in "data" worksheet is for y variable (with header)
+    ' the second column in "data" worksheet is for intercept i.e., a column of 1 (with header)
+    ' the third column and so on in "data" worksheet are for other x variables (with header)
+
+    ' Note that the solutions of Solver in Excel can be inaccurate if there are many x variables
 
     Set data_ws = ThisWorkbook.Worksheets("data")
     Set cover_ws = ThisWorkbook.Worksheets("cover")
