@@ -1,4 +1,4 @@
-Attribute VB_Name = "logistic_regression"
+Attribute VB_Name = "logisticRegression"
 Option Explicit
 
 ' The following MS website contains the code for calling Solv (and its arguments) from Solver32.dll
