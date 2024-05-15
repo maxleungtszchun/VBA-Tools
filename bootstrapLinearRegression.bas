@@ -15,7 +15,7 @@ Sub run_linear_regression( _
     ' by directly calling "fnRegress" in "ANALYS32.XLL", users don't need to install the add-in manually and can use it via VBA
 
     Dim xll_loc As String, reg_str As String, q As String
-    
+
     xll_loc = Application.LibraryPath & Application.PathSeparator & "Analysis" & Application.PathSeparator & "ANALYS32.XLL"
     reg_str = "REGISTER.ID(""" & xll_loc & """,""fnRegress"")"
     Application.Run ExecuteExcel4Macro(reg_str), y_range, x_range, intercept, header, interval, output
@@ -32,7 +32,7 @@ Dim i As Long, j As Long, b_iter As Long, data_ws_lr As Long, data_ws_lc As Long
 Dim data_ws As Worksheet, cover_ws As Worksheet
 Dim total_beta As Double, total_t As Double, avg_beta As Double, sum_square As Double
 Dim beta() As Double, t() As Double
-    
+
 On Error GoTo Handler
 
 Set data_ws = ThisWorkbook.Worksheets("data")
@@ -58,6 +58,7 @@ End With
 
 For j = 1 To b_iter
     cover_ws.Columns(Chr(64 + data_ws_lc + 1 + 2) & ":" & Chr(64 + data_ws_lc + 1 + 2 + 6)).Delete
+    cover_ws.Calculate ' the above line should recal the sheet if autocal is on. just to be safe
     run_linear_regression cover_ws.Range("B1:B" & data_ws_lr), cover_ws.Range("C1:" & Chr(64 + data_ws_lc + 1) & data_ws_lr), _
         header:=1, output:=cover_ws.Range(Chr(64 + data_ws_lc + 1 + 2) & "1")
 
