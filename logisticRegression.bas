@@ -39,13 +39,19 @@ Sub logistic_regression()
     y_range_string = "A2:A" & data_ws_lr
     X_range_string = "B2:" & Chr(64 + data_ws_lc) & data_ws_lr
 
-    beta_range_string = "B1:B" & (data_ws_lc - 1)
+    beta_range_string = "B2:B" & data_ws_lc - 1 + 1
 
     log_likelihood_string = "=SUM(data!" & y_range_string & "*LN(1/(1+EXP(-MMULT(data!" & X_range_string & "," & beta_range_string & _
         "))))+(1-data!" & y_range_string & ")*LN(1 - 1/(1+EXP(-MMULT(data!" & X_range_string & "," & beta_range_string & ")))))"
 
-    cover_ws.Range(beta_range_string).Value2 = 0
-    cover_ws.Range("D1").Formula2 = log_likelihood_string
+    With cover_ws
+        .Columns.Delete
+        .Range("B1").Value2 = "Coefficients"
+        .Range("A2:A" & data_ws_lc - 1 + 1).Value2 = Application.WorksheetFunction.Transpose(data_ws.Range("B1:" & Chr(64 + data_ws_lc) & "1").Value2)
+        .Range(beta_range_string).Value2 = 0
+        .Range("D1").Value2 = "Ln Likelihood Value"
+        .Range("D2").Formula2 = log_likelihood_string
+    End With
 
     ' I find that the solver parameters/names "solver_xxx" in OpenOffice Calc can also be applied in MS Excel
     ' https://forum.openoffice.org/en/forum/viewtopic.php?t=100959
@@ -56,11 +62,19 @@ Sub logistic_regression()
         .Add Name:="solver_adj", RefersTo:="=" & Range(beta_range_string).Address, Visible:=False
         .Add Name:="solver_typ", RefersToLocal:=1, Visible:=False
         .Add Name:="solver_val", RefersToLocal:=0, Visible:=False
-        .Add Name:="solver_opt", RefersTo:="=" & Range("cover!$D$1").Address, Visible:=False
+        .Add Name:="solver_opt", RefersTo:="=" & Range("D2").Address, Visible:=False
         .Add Name:="solver_eng", RefersToLocal:=1, Visible:=False
     End With
 
     Solver 0
+
+    With cover_ws
+        .Cells.NumberFormat = "0.000"
+        .Columns.AutoFit
+        .Range("A1").Select
+    End With
+
+    Windows(ThisWorkbook.Name).DisplayGridlines = False
 
 End Sub
 
