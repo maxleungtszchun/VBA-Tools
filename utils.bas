@@ -1,7 +1,7 @@
 Attribute VB_Name = "utils"
 Option Explicit
 
-Public Function getUniqueValue2(arr As Variant) As Variant 'accept 1d array index starts from 0
+Public Function getUniqueValue(arr As Variant) As Variant 'accept 1d array index starts from 0
     Dim new_arr As Variant
     Dim i As Long
 
@@ -12,47 +12,13 @@ Public Function getUniqueValue2(arr As Variant) As Variant 'accept 1d array inde
         new_arr(i - 1) = arr(i)
     Next i
 
-    getUniqueValue2 = new_arr 'return 1d array index starts from 0
-End Function
-
-Public Function getUniqueValueNoBlank2(arr As Variant) As Variant 'accept 1d array index starts from 0
-    arr = getUniqueValue2(arr)
-    arr = noBlankOrEmptyStrInArr(arr)
-    getUniqueValueNoBlank2 = arr 'return 1d array index starts from 0
-End Function
-
-Public Function getUniqueValue(arr As Variant) As Variant 'accept 1d array index starts from 0
-    ' Using dictionary was one of the easiest ways to find unique values before the release of built-in Unique()
-    Dim i As Long
-    Dim dict As Object
-    Dim new_arr As Variant
-    Dim j As Long
-    Dim key As Variant
-
-    Set dict = CreateObject("scripting.dictionary")
-
-    j = 0
-    For i = LBound(arr) To UBound(arr)
-        If Not dict.exists(arr(i)) Then
-            dict.Add arr(i), vbNullString
-            j = j + 1
-        End If
-    Next i
-
-    ReDim new_arr(0 To j - 1)
-    i = 0
-    For Each key In dict.keys
-        new_arr(i) = key
-        i = i + 1
-    Next key
-
     getUniqueValue = new_arr 'return 1d array index starts from 0
 End Function
 
 Public Function getUniqueValueNoBlank(arr As Variant) As Variant 'accept 1d array index starts from 0
     arr = getUniqueValue(arr)
     arr = noBlankOrEmptyStrInArr(arr)
-    getUniqueValueNoBlank = arr 'return array index starts from 0
+    getUniqueValueNoBlank = arr 'return 1d array index starts from 0
 End Function
 
 Public Function noBlankOrEmptyStrInArr(arr As Variant) 'accept 1d array index starts from any non-negative integer, including 0 and 1
@@ -159,24 +125,28 @@ End Function
 
 Public Function getLastRow(ws As Worksheet) As Long
     On Error Resume Next
-    getLastRow = ws.Cells.Find(What:="*", _
-                                After:=ws.Range("A1"), _
-                                Lookat:=xlPart, _
-                                LookIn:=xlFormulas, _
-                                SearchOrder:=xlByRows, _
-                                SearchDirection:=xlPrevious, _
-                                MatchCase:=False).Row
+    getLastRow = ws.Cells.Find(
+        What:="*", _
+        After:=ws.Range("A1"), _
+        Lookat:=xlPart, _
+        LookIn:=xlFormulas, _
+        SearchOrder:=xlByRows, _
+        SearchDirection:=xlPrevious, _
+        MatchCase:=False
+    ).Row
     On Error GoTo 0
 End Function
 
 Public Function getLastColumn(ws As Worksheet) As Long
     On Error Resume Next
-    getLastColumn = ws.Cells.Find(What:="*", _
-                                    After:=ws.Range("A1"), _
-                                    Lookat:=xlPart, _
-                                    LookIn:=xlFormulas, _
-                                    SearchOrder:=xlByColumns, _
-                                    SearchDirection:=xlPrevious, _
-                                    MatchCase:=False).Column
+    getLastColumn = ws.Cells.Find(
+        What:="*", _
+        After:=ws.Range("A1"), _
+        Lookat:=xlPart, _
+        LookIn:=xlFormulas, _
+        SearchOrder:=xlByColumns, _
+        SearchDirection:=xlPrevious, _
+        MatchCase:=False
+    ).Column
     On Error GoTo 0
 End Function
