@@ -66,6 +66,7 @@ Sub logistic_regression()
         .Add Name:="solver_eng", RefersToLocal:=1, Visible:=False
     End With
 
+    cover_ws.Activate
     Solver 0
 
     With cover_ws
