@@ -87,6 +87,7 @@ Sub bootstrap_linear_regression_fast()
         .Range("I1").Value2 = "Bootstrapped t Stat"
         .Cells.NumberFormat = "0.000"
         .Columns.AutoFit
+        .Activate
         .Range("A1").Select
     End With
 
