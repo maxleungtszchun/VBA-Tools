@@ -48,7 +48,6 @@ Sub bootstrap_linear_regression_fast()
 
         For i = 0 To data_ws_lc - 1
             beta(i + 1, j) = boot_result(1, data_ws_lc - i)
-            t(i + 1, j) = boot_result(1, data_ws_lc - i) / boot_result(2, data_ws_lc - i)
         Next i
     Next j
 
@@ -73,18 +72,9 @@ Sub bootstrap_linear_regression_fast()
         cover_ws.Range("H" & i + 1).Value2 = (sum_square / (b_iter - 1)) ^ 0.5
     Next i
 
-    For i = 1 To data_ws_lc
-        total_t = 0
-        For j = 1 To b_iter
-            total_t = total_t + t(i, j)
-        Next j
-        cover_ws.Range("I" & i + 1).Value2 = total_t / b_iter
-    Next i
-
     With cover_ws
         .Range("G1").Value2 = "Bootstrapped Coeff"
         .Range("H1").Value2 = "Bootstrapped SE"
-        .Range("I1").Value2 = "Bootstrapped t Stat"
         .Cells.NumberFormat = "0.000"
         .Columns.AutoFit
         .Activate

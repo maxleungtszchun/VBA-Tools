@@ -64,7 +64,6 @@ Sub bootstrap_linear_regression()
 
         For i = 1 To data_ws_lc
             beta(i, j) = cover_ws.Range(Chr(64 + data_ws_lc + 1 + 3) & 16 + i).Value2
-            t(i, j) = cover_ws.Range(Chr(64 + data_ws_lc + 1 + 5) & 16 + i).Value2
         Next i
     Next j
 
@@ -86,18 +85,9 @@ Sub bootstrap_linear_regression()
         cover_ws.Range("J" & i + 16).Value2 = (sum_square / (b_iter - 1)) ^ 0.5
     Next i
 
-    For i = 1 To data_ws_lc
-        total_t = 0
-        For j = 1 To b_iter
-            total_t = total_t + t(i, j)
-        Next j
-        cover_ws.Range("K" & i + 16).Value2 = total_t / b_iter
-    Next i
-
     With cover_ws
         .Range("I16").Value2 = "Bootstrapped Coeff"
         .Range("J16").Value2 = "Bootstrapped SE"
-        .Range("K16").Value2 = "Bootstrapped t Stat"
         .Cells.NumberFormat = "0.000"
         .Range("B8").NumberFormat = "0"
         .Range("B12:B14").NumberFormat = "0"
