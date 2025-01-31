@@ -41,8 +41,9 @@ Sub logistic_regression()
 
     beta_range_string = "B2:B" & data_ws_lc - 1 + 1
 
+    ' a very small number 1E-10 is added to prevent the case LN(0)
     log_likelihood_string = "=SUM(data!" & y_range_string & "*LN(1/(1+EXP(-MMULT(data!" & X_range_string & "," & beta_range_string & _
-        "))))+(1-data!" & y_range_string & ")*LN(1 - 1/(1+EXP(-MMULT(data!" & X_range_string & "," & beta_range_string & ")))))"
+        "))))+(1-data!" & y_range_string & ")*LN(1/(1+EXP(MMULT(data!" & X_range_string & "," & beta_range_string & ")))))"
 
     With cover_ws
         .Columns.Delete
@@ -64,6 +65,11 @@ Sub logistic_regression()
         .Add Name:="solver_val", RefersToLocal:=0, Visible:=False
         .Add Name:="solver_opt", RefersTo:="=" & Range("D2").Address, Visible:=False
         .Add Name:="solver_eng", RefersToLocal:=1, Visible:=False
+        .Add Name:="solver_scl", RefersToLocal:=1, Visible:=False
+        .Add Name:="solver_neg", RefersToLocal:=2, Visible:=False
+        .Add Name:="solver_ssz", RefersToLocal:=100000, Visible:=False
+        .Add Name:="solver_lin", RefersToLocal:=2, Visible:=False
+        .Add Name:="solver_itr", RefersTo:=2147483647#, Visible:=False
     End With
 
     cover_ws.Activate
