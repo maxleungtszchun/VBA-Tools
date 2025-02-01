@@ -3,8 +3,6 @@ Option Explicit
 
 ' The following MS website contains the code for calling Solv (and its arguments) from Solver32.dll
 ' https://answers.microsoft.com/en-us/msoffice/forum/all/calling-solver-dll-through-vba/e453b8d1-14cc-471f-b740-2c0064bb17bb
-' same info
-' https://github.com/GCuser99/SolverWrapper/blob/main/src/vba/SolvDLL.cls
 
 #If VBA7 Then
 Private Declare PtrSafe Function Solv Lib "Solver32.dll" (ByVal obj, ByVal obj, ByVal work_book, ByVal x As Long) As Long
@@ -41,7 +39,6 @@ Sub logistic_regression()
 
     beta_range_string = "B2:B" & data_ws_lc - 1 + 1
 
-    ' a very small number 1E-10 is added to prevent the case LN(0)
     log_likelihood_string = "=SUM(data!" & y_range_string & "*LN(1/(1+EXP(-MMULT(data!" & X_range_string & "," & beta_range_string & _
         "))))+(1-data!" & y_range_string & ")*LN(1/(1+EXP(MMULT(data!" & X_range_string & "," & beta_range_string & ")))))"
 
