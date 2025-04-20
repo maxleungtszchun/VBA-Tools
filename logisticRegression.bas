@@ -35,7 +35,7 @@ Sub logistic_regression()
     data_ws_lc = data_ws.Cells(1, cover_ws.Columns.Count).End(xlToLeft).Column
 
     y_range_string = "A2:A" & data_ws_lr
-    X_range_string = "B2:" & Chr(64 + data_ws_lc) & data_ws_lr
+    X_range_string = "B2:" & ConvertToLetter(data_ws_lc) & data_ws_lr
 
     beta_range_string = "B2:B" & data_ws_lc - 1 + 1
 
@@ -45,7 +45,7 @@ Sub logistic_regression()
     With cover_ws
         .Columns.Delete
         .Range("B1").Value2 = "Coefficients"
-        .Range("A2:A" & data_ws_lc - 1 + 1).Value2 = Application.WorksheetFunction.Transpose(data_ws.Range("B1:" & Chr(64 + data_ws_lc) & "1").Value2)
+        .Range("A2:A" & data_ws_lc - 1 + 1).Value2 = Application.WorksheetFunction.Transpose(data_ws.Range("B1:" & ConvertToLetter(data_ws_lc) & "1").Value2)
         .Range(beta_range_string).Value2 = 0
         .Range("D1").Value2 = "Ln Likelihood Value"
         .Range("D2").Formula2 = log_likelihood_string
@@ -81,6 +81,20 @@ Sub logistic_regression()
     Windows(ThisWorkbook.Name).DisplayGridlines = False
 
 End Sub
+
+' https://learn.microsoft.com/en-us/office/troubleshoot/excel/convert-excel-column-numbers
+Function ConvertToLetter(ByVal iCol As Long) As String
+   Dim a As Long
+   Dim b As Long
+   a = iCol
+   ConvertToLetter = ""
+   Do While iCol > 0
+      a = Int((iCol - 1) / 26)
+      b = (iCol - 1) Mod 26
+      ConvertToLetter = Chr(b + 65) & ConvertToLetter
+      iCol = a
+   Loop
+End Function
 
 Sub Solver(x As Long)
     Dim dll_loc As String
