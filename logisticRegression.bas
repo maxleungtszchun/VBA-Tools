@@ -4,10 +4,17 @@ Option Explicit
 ' The following MS website contains the code for calling Solv (and its arguments) from Solver32.dll
 ' https://answers.microsoft.com/en-us/msoffice/forum/all/calling-solver-dll-through-vba/e453b8d1-14cc-471f-b740-2c0064bb17bb
 
+Public Enum BOOL
+    CFALSE
+    CTRUE
+End Enum
+
 #If VBA7 Then
 Private Declare PtrSafe Function Solv Lib "Solver32.dll" (ByVal obj, ByVal obj, ByVal work_book, ByVal x As Long) As Long
+Private Declare PtrSafe Function SetDllDirectory Lib "kernel32" Alias "SetDllDirectoryW" (Optional ByVal lpPathName As LongPtr) As BOOL
 #Else
 Private Declare Function Solv Lib "Solver32.dll" (ByVal obj, ByVal obj, ByVal work_book, ByVal x As Long) As Long
+Private Declare Function SetDllDirectory Lib "kernel32" Alias "SetDllDirectoryW" (Optional ByVal lpPathName As LongPtr) As BOOL
 #End If
 
 Sub logistic_regression()
@@ -98,10 +105,11 @@ End Function
 
 Sub Solver(x As Long)
     Dim dll_loc As String
-    
+
     dll_loc = Application.LibraryPath & Application.PathSeparator & "Solver"
-    ChDir (dll_loc)
-    ChDrive (dll_loc)
+    'ChDir (dll_loc)
+    'ChDrive (dll_loc)
+    SetDllDirectory StrPtr(dll_loc)
     
     Solv Application, Application, ThisWorkbook, x
 End Sub
